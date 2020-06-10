@@ -19,6 +19,7 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.saveDefaultConfig();
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN + "InvenCheck starting.....");
 		this.registerCommands();
 	}
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "InvenCheck shutting down.....");
+		this.reload();
 	}
 	
 	public void reload() {
