@@ -44,10 +44,18 @@ public class CouponCommand implements CommandInterface {
 					// Handle NPE
 				}
 				
+				//TODO: Make plugin more modular using string formatting and config for more commands if plugins change
+				//TODO: Clean up code, organize
 				else {
+					// If inventory is full, add a key to player's virtual key balance
 					if (isFull(p)) {
 						p.sendMessage(this.plugin.getMessage("coupon-fullinventory"));
-						couponCmd = "treasures keys " + targetName + " " + couponType + " add " + couponQuant;
+						couponCmd = "treasures keys " + targetName + " " + couponType.toLowerCase() + " add " + couponQuant;
+						Bukkit.dispatchCommand(console, couponCmd);
+					}
+					else {
+						//Else give physical key
+						couponCmd = "coupon give " + targetName + " " + couponType + " " + couponQuant;
 						Bukkit.dispatchCommand(console, couponCmd);
 					}
 				}
