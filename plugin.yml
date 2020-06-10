@@ -1,0 +1,5 @@
+name: InvenCheck
+main: io.github.christophng.InvenCheck.Main
+version: 0.1
+commands:
+  invencheck:
