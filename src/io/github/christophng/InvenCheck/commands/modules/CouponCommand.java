@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import io.github.christophng.InvenCheck.Main;
 import io.github.christophng.InvenCheck.commands.CommandInterface;
+import net.md_5.bungee.api.ChatColor;
 
 public class CouponCommand implements CommandInterface {
 	
@@ -24,42 +25,50 @@ public class CouponCommand implements CommandInterface {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		String couponType;
-		String couponQuant;
-		String couponCmd;
+		String keyType;
+		String keyQuant;
+		String keyCmd;
 		String targetName;
 		
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		
 		// ex: /invcheck coupon TESTKEY QUANTITY PLAYERNAME
-		// args length = 3
-			if (args.length > 1 && args.length <= 4) {
-				couponType = args[1];
-				couponQuant = args[2];
-				targetName = args[3];
-				
-				Player p = Bukkit.getPlayer(targetName);
-				
-				if (p == null) {
-					// Handle NPE
-				}
-				
-				//TODO: Make plugin more modular using string formatting and config for more commands if plugins change
-				//TODO: Clean up code, organize
-				else {
-					// If inventory is full, add a key to player's virtual key balance
+
+		if (args.length == 4) {
+			keyType = args[1];
+			keyQuant = args[2];
+			targetName = args[3];
+			
+			Player p = Bukkit.getPlayer(targetName);
+			
+			if (p == null) {
+				// Handle NPE
+			}
+			
+			//TODO: Make plugin more modular using string formatting and config for more commands if plugins change
+			//TODO: Clean up code, organize
+			else {
+				if (p.hasPermission("invencheck.use")) {
 					if (isFull(p)) {
-						p.sendMessage(this.plugin.getMessage("coupon-fullinventory"));
-						couponCmd = "treasures keys " + targetName + " " + couponType.toLowerCase() + " add " + couponQuant;
-						Bukkit.dispatchCommand(console, couponCmd);
+						p.sendMessage(this.plugin.getMessage("coupon-fullinventory").replace("[key]", keyType).replace("[quantity]", keyQuant));
+						keyCmd = "treasures keys " + targetName + " " + keyType.toLowerCase() + " add " + keyQuant;
+						Bukkit.dispatchCommand(console, keyCmd);
 					}
 					else {
 						//Else give physical key
-						couponCmd = "coupon give " + targetName + " " + couponType + " " + couponQuant;
-						Bukkit.dispatchCommand(console, couponCmd);
+						keyCmd = "coupon give " + targetName + " " + keyType + " " + keyQuant;
+						Bukkit.dispatchCommand(console, keyCmd);
 					}
+				} else {
+					p.sendMessage(this.plugin.getMessage("no-access"));
 				}
+				// If inventory is full, add a key to player's virtual key balance
 			}
+		} 
+			// If not 4 arguments, give prompt:
+		else {
+			sender.sendMessage(this.plugin.getMessage("coupon-use"));
+		}
 		
 		return false;
 	}

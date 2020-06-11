@@ -1,5 +1,11 @@
 name: InvenCheck
 main: io.github.christophng.InvenCheck.Main
-version: 0.1
+version: 1.0.1
+author: adudefromthebar
 commands:
   invencheck:
+  
+permissions:
+  invencheck.use:
+    description: Allows you to use the commands in-game
+    default: op

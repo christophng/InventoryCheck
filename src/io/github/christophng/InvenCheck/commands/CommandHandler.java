@@ -32,27 +32,22 @@ public class CommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
  
-        if(sender instanceof Player) {
+    	//Check if any subcommands 
+        if(args.length == 0) {
+            return true;
+        }
  
-            if(args.length == 0) {
+        //If subcommands, get the CommandExecutor for the subcommand if it exists
+        if(args.length > 0) {
+        	
+            if(exists(args[0])){
+                getExecutor(args[0]).onCommand(sender, cmd, commandLabel, args);
+                return true;
+        
+            } else {
+                sender.sendMessage("This command doesn't exist!");
                 return true;
             }
- 
-            if(args.length > 0) {
- 
-                if(exists(args[0])){
- 
-                    getExecutor(args[0]).onCommand(sender, cmd, commandLabel, args);
-                    return true;
-                } else {
- 
-                    sender.sendMessage("This command doesn't exist!");
-                    return true;
-                }
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED + "You must be a player to use this command.");
-            return true;
         }
         return false;
     }

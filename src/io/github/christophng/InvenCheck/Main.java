@@ -12,7 +12,6 @@ public class Main extends JavaPlugin {
 
 	public void registerCommands() {
 		CommandHandler handler = new CommandHandler();
-		
 		handler.register("coupon", new CouponCommand(this));
 		getCommand("invencheck").setExecutor(handler);
 	}
@@ -33,7 +32,6 @@ public class Main extends JavaPlugin {
 	public void reload() {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-		
 	}
 	
     public String getMessage(final String path) {
