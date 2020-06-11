@@ -1,1 +1,3 @@
 coupon-fullinventory: "&bYour inventory is full, so the key was added to your virtual key balance!"
+no-access: "&cAccess denied"
+coupon-use: "&7Proper usage: /invencheck coupon [Keytype] [quantity] [username]"
